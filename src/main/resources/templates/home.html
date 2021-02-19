@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>LISTA UŻYTKOWNIKÓW</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <style>
+        .text-color-mz1 {
+            color: darkgreen;
+        }
+
+        .bg-color-mz1 {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+<div class="container-fluid bg-white shadow-sm mt-5 mb-2 text-color-mz1 fs-4 text-center fw-bolder pt-3 pb-3">
+    <img src="/people.png" class="mt-4" th:if="${#arrays.contains(@environment.getActiveProfiles(), 'prod')}" />
+    <img src="/people_dev.png" class="mt-4" th:if="${#arrays.contains(@environment.getActiveProfiles(), 'dev')}" />
+    LISTA UŻYTKOWNIKÓW
+</div>
+
+<div class="container">
+
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Imię</th>
+            <th scope="col">Nazwisko</th>
+            <th scope="col">Data urodzenia</th>
+            <th scope="col" colspan="2">Operacja</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user: ${users}">
+            <td th:text="${user.id}">ID</td>
+            <td th:text="${user.firstName}">Imię</td>
+            <td th:text="${user.lastName}">Nazwisko</td>
+            <td th:text="${user.getBirthday()}">Data urodzenia </td>
+            <td><a href="#" th:href="|/del/${user.id}|">usuń</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="d-grid d-md-flex justify-content-md-end">
+        <a  class="btn btn-success m-1" href="/" role="button">Wyczyść</a>
+        <a  class="btn btn-warning m-1" href="/" role="button">Dodaj</a>
+    </div>
+</div>
+
+<div class="container-fluid bg-color-mz1 text-secondary shadow-sm mt-5 mb-2 fs-6 text-center pt-3 pb-3">
+    Designed by Michał Zygor, 2021.02
+</div>
+</body>
+</html>
