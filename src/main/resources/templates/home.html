@@ -19,8 +19,8 @@
 <body class="bg-light">
 
 <div class="container-fluid bg-white shadow-sm mt-5 mb-2 text-color-mz1 fs-4 text-center fw-bolder pt-3 pb-3">
-    <img src="/people.png" class="mt-4" th:if="${#arrays.contains(@environment.getActiveProfiles(), 'prod')}" />
-    <img src="/people_dev.png" class="mt-4" th:if="${#arrays.contains(@environment.getActiveProfiles(), 'dev')}" />
+    <img src="/people.png" class="mt-4" th:if="${#arrays.contains(@environment.getActiveProfiles(), 'prod')}"/>
+    <img src="/people_dev.png" class="mt-4" th:if="${#arrays.contains(@environment.getActiveProfiles(), 'dev')}"/>
     LISTA UŻYTKOWNIKÓW
 </div>
 
@@ -41,16 +41,39 @@
             <td th:text="${user.id}">ID</td>
             <td th:text="${user.firstName}">Imię</td>
             <td th:text="${user.lastName}">Nazwisko</td>
-            <td th:text="${user.getBirthday()}">Data urodzenia </td>
-            <td><a href="#" th:href="|/del/${user.id}|">usuń</a></td>
+            <td th:text="${user.getBirthday()}">Data urodzenia</td>
+            <td><a href="#" th:href="|/delete/${user.id}|">usuń</a></td>
         </tr>
         </tbody>
     </table>
+    <br />
+    <hr/>
 
-    <div class="d-grid d-md-flex justify-content-md-end">
-        <a  class="btn btn-success m-1" href="/" role="button">Wyczyść</a>
-        <a  class="btn btn-warning m-1" href="/" role="button">Dodaj</a>
+    <div style="width: 100%; max-width: 1000px; margin: 0 100px auto">
+        <h5>DODAJ NOWEGO UŻYTKOWNIKA:</h5>
+        <form th:action="|/add/|" method="post" th:object="${user}">
+            <div class="mb-3">
+                <label for="firstName" class="form-label">Imię</label>
+                <input type="text" class="form-control" id="firstName" th:field="*{firstName}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="lastName" class="form-label">Nazwisko</label>
+                <input type="text" class="form-control" id="lastName" th:field="*{lastName}" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="birthday" class="form-label">Data urodzin</label>
+                <input type="date" class="form-control" id="birthday" th:field="*{birthday}" required>
+            </div>
+
+            <div class="mb-3">
+                <button type="reset" class="btn btn-warning mb-3">Wyczyść formularz</button>
+                <button type="submit" class="btn btn-success mb-3">Dodaj</button>
+            </div>
+        </form>
     </div>
+
 </div>
 
 <div class="container-fluid bg-color-mz1 text-secondary shadow-sm mt-5 mb-2 fs-6 text-center pt-3 pb-3">
