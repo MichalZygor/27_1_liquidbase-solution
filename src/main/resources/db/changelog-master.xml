@@ -7,5 +7,6 @@
 
 
     <include file="001-initial.xml" relativeToChangelogFile="true"/>
+    <include file="002-user_new_columns.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
