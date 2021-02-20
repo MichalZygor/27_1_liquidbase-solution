@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import pl.javastart.liquibasesolution.user.User;
 import pl.javastart.liquibasesolution.user.UserRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -36,9 +35,7 @@ public class MainController {
 
     @PostMapping("/add")
     public String addTask(User user) {
-        //user.setCreatedDate(LocalDate.now());
         userRepository.save(user);
         return "redirect:/";
     }
-
 }

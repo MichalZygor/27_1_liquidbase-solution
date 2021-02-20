@@ -10,7 +10,6 @@ import pl.javastart.liquibasesolution.user.UserRepository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Profile("dev")
 @Component
@@ -25,15 +24,20 @@ public class TestDataProvider {
     public void insertTestData(){
         Random random = new Random();
         List<User> users = userRepository.findAll();
+        int localDateMonthNow = LocalDate.now().getMonthValue();
+        System.out.println(localDateMonthNow);
         for(User userInt : users){
-//            long minDay = LocalDate.of(1970, LocalDate.now().getMonthValue(), 1).toEpochDay();
-//            long maxDay = LocalDate.of(2015, LocalDate.now().getMonthValue(), 31).toEpochDay();
-            long minDay = LocalDate.of(1970, 1, 1).toEpochDay();
-            long maxDay = LocalDate.of(2015, 12, 31).toEpochDay();
-            long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
-            LocalDate randomDate = LocalDate.ofEpochDay(randomDay);
+            LocalDate randomDate = LocalDate.of(getRandomNumberUsingInts(1970,2015),
+                    localDateMonthNow, getRandomNumberUsingInts(1,28));
             userInt.setBirthday(randomDate);
         }
         userRepository.saveAll(users);
+    }
+
+    private int getRandomNumberUsingInts(int min, int max) {
+        Random random = new Random();
+        return random.ints(min, max)
+                .findFirst()
+                .getAsInt();
     }
 }
